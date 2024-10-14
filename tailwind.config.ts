@@ -8,7 +8,15 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['sans-serif']
+      },
       colors: {
+        titlecolor: '#F9FAFB',
+        buttontitle: '#e8eaea',
+        cardcolor: '#202332',
+        buttoncolor: '#4d5562',
+        cardcolor2: '#16192a',
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
