@@ -1,4 +1,3 @@
-import Hero from '../app/assets/images/hero_img.jpg';
 
 // image = https://i.ibb.co/Jj2JhMh/hero-img.jpg
 
