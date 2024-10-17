@@ -1,1 +1,1 @@
-Technical test in php. Have a nice day :)
+Only frontend, will be upgrade soon. Have a nice day :)
