@@ -1,7 +1,73 @@
+'use client'
 
-// image = https://i.ibb.co/Jj2JhMh/hero-img.jpg
+import { useState, useEffect } from 'react'
+
+type Language = 'detect' | 'EN' | 'FR' | 'ES'
 
 export default function Home() {
+  const [inputText, setInputText] = useState('')
+  const [translatedText, setTranslatedText] = useState('')
+  const [sourceLanguage, setSourceLanguage] = useState<Language>('detect')
+  const [targetLanguage, setTargetLanguage] = useState<Language>('FR')
+  const [isTranslating, setIsTranslating] = useState(false)
+
+  const handleTranslate = async () => {
+    if (!inputText.trim()) return
+
+    setIsTranslating(true)
+    try {
+      const response = await fetch('https://api-free.deepl.com/v2/translate', {
+        method: 'POST',
+        headers: {
+          'Authorization': `DeepL-Auth-Key ${process.env.NEXT_PUBLIC_DEEPL_API_KEY}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          text: [inputText],
+          target_lang: targetLanguage,
+          ...(sourceLanguage !== 'detect' && { source_lang: sourceLanguage }),
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error('Translation failed')
+      }
+
+      const data = await response.json()
+      setTranslatedText(data.translations[0].text)
+    } catch (error) {
+      console.error('Error al traducir:', error)
+      setTranslatedText('Error en la traducción. Por favor, intenta de nuevo.')
+    } finally {
+      setIsTranslating(false)
+    }
+  }
+
+  const handleLanguageSwitch = () => {
+    if (sourceLanguage !== 'detect') {
+      setSourceLanguage(targetLanguage)
+      setTargetLanguage(sourceLanguage)
+      setInputText(translatedText)
+      setTranslatedText(inputText)
+    }
+  }
+
+  useEffect(() => {
+    if (sourceLanguage === targetLanguage && sourceLanguage !== 'detect') {
+      setTargetLanguage(prevLang => {
+        const langs: Language[] = ['EN', 'FR', 'ES']
+        return langs.find(lang => lang !== prevLang) || 'EN'
+      })
+    }
+  }, [sourceLanguage, targetLanguage])
+
+  const languageNames: Record<Language, string> = {
+    'detect': 'Detect Language',
+    'EN': 'English',
+    'FR': 'French',
+    'ES': 'Spanish'
+  }
+
   return (
     <div className='relative h-screen'>
       {/* bg image */}
