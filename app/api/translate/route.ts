@@ -1,21 +1,11 @@
-import { NextResponse } from 'next/server';
+import { NextResponse } from 'next/server'
 
-// Connection to DeepL to perform translations using the API
+
+// Connection to DeepL, to perform translations using the Api
 export async function POST(request: Request) {
     try {
-    // Parsing the request body
-    const body = await request.json();
-    const { text, targetLang, sourceLang } = body;
-
-    // Verifying if the text and targetLang parameters are present
-    if (!text || !targetLang) {
-        return NextResponse.json(
-        { error: 'Missing required fields: text and targetLang' },
-        { status: 400 }
-        );
-    }
-
-    // Making a request to the DeepL API
+    const body = await request.json()
+    
     const response = await fetch('https://api-free.deepl.com/v2/translate', {
         method: 'POST',
         headers: {
@@ -23,25 +13,23 @@ export async function POST(request: Request) {
         'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-        text: [text],
-        target_lang: targetLang,
-        ...(sourceLang !== 'detect' && { source_lang: sourceLang }),
+        text: [body.text],
+        target_lang: body.targetLang,
+        ...(body.sourceLang !== 'detect' && { source_lang: body.sourceLang }),
         }),
-    });
+    })
 
-    // Check for errors in the response
     if (!response.ok) {
-        throw new Error(`DeepL Error: ${response.status}`);
+        throw new Error(`Error de DeepL: ${response.status}`)
     }
 
-    const data = await response.json();
-    return NextResponse.json(data);
-
+    const data = await response.json()
+    return NextResponse.json(data)
     } catch (error) {
-    console.error('Translation server error:', error);
+    console.error('Error en la traducción:', error)
     return NextResponse.json(
-        { error: 'Translation server error' },
+        { error: 'Error en el servidor de traducción' },
         { status: 500 }
-    );
+    )
     }
 }
