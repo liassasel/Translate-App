@@ -15,6 +15,6 @@ Translate Desktop is a language translation web application that uses the DeepL 
 ~ DeepL API: Provides translation functionality.
 
 
-The application is deployed and accessible at: Your Deployed URL
+The application is deployed and accessible at: https://translate-app-wine-six.vercel.app/
 
 Have a nice day ;)
