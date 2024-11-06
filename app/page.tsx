@@ -1,4 +1,4 @@
-'use client'
+
 
 import TranslatePage from './components/TranslatePage'
 

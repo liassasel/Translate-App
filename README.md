@@ -2,7 +2,7 @@
 
 Translate Desktop is a language translation web application that uses the DeepL API to provide fast and accurate translations. The project is developed with Tailwind CSS for styling and TypeScript for robust type safety.
 
-Features
+## Features
 
 ~ Translate text between multiple languages, with the option to auto-detect the source language.
 ~ Copy translated text with a single click.
@@ -16,3 +16,5 @@ Features
 
 
 The application is deployed and accessible at: Your Deployed URL
+
+Have a nice day ;)
